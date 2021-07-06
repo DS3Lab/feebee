@@ -4,7 +4,6 @@ from absl import logging
 import json
 import numpy as np
 import os.path as path
-from spacy.lang.en import English
 import time
 
 from . import generic
@@ -17,16 +16,8 @@ flags.DEFINE_string("file_dict_features", None, "Property containing the feature
 flags.DEFINE_string("file_dict_labels", None, "Property containing the labels")
 flags.DEFINE_integer("file_startindex", 0, "Start index of the entries in the file")
 flags.DEFINE_integer("file_endindex", -1, "End index of the entries in the file (-1 means all)")
-flags.DEFINE_boolean("text_splitsentences", False, "Split into sentences")
 flags.DEFINE_integer("text_numsentences", 10, "Max number of sentences")
 flags.DEFINE_string("text_decodeformat", "utf-8", "Decoding format")
-
-nlp = English()
-nlp.add_pipe(nlp.create_pipe('sentencizer')) # updated
-
-def split_into_sentences(paragraph):
-    doc = nlp(paragraph)
-    return [sent.string.strip() for sent in doc.sents]
 
 def test_argument_and_file(folder_path, arg_name):
     if arg_name not in FLAGS.__flags.keys() or not FLAGS.__flags[arg_name].value:

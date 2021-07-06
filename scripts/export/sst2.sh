@@ -10,6 +10,8 @@ mkdir -p "matrices/$dataset/test/"
 
 sfolder="scripts/export"
 
+# TODO: Add export BOW and BOW-TFIDF
+
 # PCA 8 / 16 / 32 / 64
 cmd="bash $sfolder/export_all_pca.sh $dataset $suffix 8"
 $cmd

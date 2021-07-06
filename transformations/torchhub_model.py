@@ -24,7 +24,7 @@ flags.DEFINE_integer("torchhub_maxtokenoutput", 128, "Max number of tokens for t
 from .reader import generic
 from .reader.folder import read as read_from_folder
 from .reader.tfds import read as read_from_tfds
-from .reader.textfile import read as read_from_textfile, split_into_sentences
+from .reader.textfile import read as read_from_textfile
 from .reader.matrix import apply_fn_matrices
 
 def setup():
@@ -127,34 +127,6 @@ def get_text_fn(string_input = False):
             else:
                 res = model_res[1].cpu().detach().numpy()
             return res
-
-    if FLAGS.text_splitsentences:
-        def split_and_merge(sample):
-            embeddings = []
-            dim = None
-            sample_in = sample
-            if not string_input:
-                sample_in = sample.decode(FLAGS.text_decodeformat)
-            sentences = split_into_sentences(sample_in)[:FLAGS.text_numsentences]
-            for s in sentences:
-                embeddings.append(compute(s))
-                if dim is None:
-                    dim = embeddings[0].shape
-            for i in range(FLAGS.text_numsentences - len(sentences)):
-                embeddings.append(np.zeros(dim))
-            result = np.concatenate(embeddings)
-            return result
-
-        def apply_fn(features):
-            embeddings = []
-            for f in features:
-                embeddings.append(split_and_merge(f))
-
-            result = np.stack(embeddings)
-            return result
-
-        return apply_fn
-
 
     def apply_fn(features):
         embeddings = []

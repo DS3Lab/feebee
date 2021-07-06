@@ -17,7 +17,7 @@ from .reader import generic
 from .reader.tfds import get_batch_iterator
 from .reader.folder import read as read_from_folder
 from .reader.tfds import read as read_from_tfds
-from .reader.textfile import read as read_from_textfile, split_into_sentences
+from .reader.textfile import read as read_from_textfile
 from .reader.matrix import apply_fn_matrices
 
 def setup():
@@ -43,35 +43,6 @@ def get_text_fn(to_numpy = False, string_input = False):
     else:
         compute = lambda z: output(z)
 
-    if FLAGS.text_splitsentences:
-        def split_and_merge(sample):
-            embeddings = []
-            dim = None
-            sample_in = sample
-            if string_input:
-                sample_in = sample.decode(FLAGS.text_decodeformat)
-            emb = compute(split_into_sentences(sample_in)[:FLAGS.text_numsentences])
-            if not to_numpy:
-                emb = emb.numpy()
-            if dim is None:
-                dim = emb.shape[1]
-            samples = emb.shape[0]
-            embeddings.append(emb.reshape(-1))
-            if samples < FLAGS.text_numsentences:
-                embeddings.append(np.zeros(dim * (FLAGS.text_numsentences - samples)))
-            result = np.concatenate(embeddings)
-            return result
-
-        def apply_fn(features):
-            embeddings = []
-            for f in features:
-                embeddings.append(split_and_merge(f))
-
-            result = np.stack(embeddings)
-            return result
-
-        return apply_fn
-
     return compute
 
 def load_and_apply_from_tfds():
@@ -87,7 +58,7 @@ def load_and_apply_from_tfds():
         return read_from_tfds(compute, True, True, True)
 
     # ELSE Text
-    return read_from_tfds(get_text_fn(False, FLAGS.text_splitsentences), not FLAGS.text_splitsentences, False, False)
+    return read_from_tfds(get_text_fn(False, False), True, False, False)
 
 
 def load_and_apply_from_folder():
