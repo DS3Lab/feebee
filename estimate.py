@@ -15,6 +15,7 @@ import methods.knn as knn
 import methods.ghp as ghp
 import methods.kde as kde
 import methods.onenn as onenn
+import methods.lr_model as lr_model
 
 FLAGS = flags.FLAGS
 
@@ -24,13 +25,13 @@ flags.DEFINE_string("features_test", None, "Name of the test features numpy matr
 flags.DEFINE_string("labels_train", None, "Name of the train labels numpy matrix exported file (npy)")
 flags.DEFINE_string("labels_test", None, "Name of the test labels numpy matrix exported file (npy)")
 
-flags.DEFINE_list("noise_levels", [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], "Run at different noise levels")
+flags.DEFINE_list("noise_levels", [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], "Run at different noise levels")
 flags.DEFINE_integer("noise_runs", 30, "Number of runs for different noise levels")
 
 flags.DEFINE_string("output_file", None, "File to write the output in CSV format (including headers)")
 flags.DEFINE_bool("output_overwrite", True, "Writes (if True) or appends (if False) to the specified output file if any")
 
-flags.DEFINE_enum("method", None, ["knn", "knn_loo", "ghp", "kde_knn_loo", "kde", "onenn"], "Method to estimate the bayes error (results in either 1 value or a lower and upper bound)")
+flags.DEFINE_enum("method", None, ["knn", "knn_loo", "ghp", "kde_knn_loo", "kde", "onenn", "lr_model"], "Method to estimate the bayes error (results in either 1 value or a lower and upper bound)")
 
 def _get_csv_row(variant, run, samples, noise, results, time):
     return {'method': FLAGS.method,
@@ -196,6 +197,8 @@ def main(argv):
 
     if FLAGS.method == "knn":
         estimate_from_split_matrices(knn.eval_from_matrices)
+    if FLAGS.method == "lr_model":
+        estimate_from_split_matrices(lr_model.eval_from_matrices)
     elif FLAGS.method == "knn_loo":
         estimate_from_single_matrix(knn.eval_from_matrix_loo)
     elif FLAGS.method == "ghp":

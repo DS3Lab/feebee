@@ -10,15 +10,14 @@ from sklearn.metrics import brier_score_loss
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 
-from timed_logger import TimedLogger
+from .timed_logger import TimedLogger
 
 FLAGS = flags.FLAGS
 
-flags.DEFINE_list("l2_regs", None, "L2 regularization (list) of the last layer")
+flags.DEFINE_list("l2_regs", [0.0, 0.01], "L2 regularization (list) of the last layer")
 flags.DEFINE_integer("epochs", 100, "Number of epochs to train")
-flags.DEFINE_list("sgd_lrs", None, "SGD learning rate (list)")
+flags.DEFINE_list("sgd_lrs", [0.1, 0.01], "SGD learning rate (list)")
 flags.DEFINE_float("sgd_momentum", 0.9, "SGD momentum")
-flags.DEFINE_integer("batch_size", 64, "Batch size to loop through the samples", lower_bound=0)
 
 KEY_PATTERN = "l2={0}, lr={1}"
 
