@@ -18,6 +18,7 @@ flags.DEFINE_list("l2_regs", None, "L2 regularization (list) of the last layer")
 flags.DEFINE_integer("epochs", 100, "Number of epochs to train")
 flags.DEFINE_list("sgd_lrs", None, "SGD learning rate (list)")
 flags.DEFINE_float("sgd_momentum", 0.9, "SGD momentum")
+flags.DEFINE_integer("batch_size", 64, "Batch size to loop through the samples", lower_bound=0)
 
 KEY_PATTERN = "l2={0}, lr={1}"
 
