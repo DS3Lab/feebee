@@ -32,20 +32,21 @@ flags.DEFINE_bool("output_overwrite", True, "Writes (if True) or appends (if Fal
 
 flags.DEFINE_enum("method", None, ["knn", "knn_loo", "ghp", "kde_knn_loo", "kde", "onenn"], "Method to estimate the bayes error (results in either 1 value or a lower and upper bound)")
 
-def _get_csv_row(variant, run, samples, noise, results):
+def _get_csv_row(variant, run, samples, noise, results, time):
     return {'method': FLAGS.method,
             'variant': variant,
             'run': run,
             'samples': samples,
             'noise': noise,
-            'results': results}
+            'results': results,
+            'time': time}
 
 def _write_result(rows):
     writeheader = False
     if FLAGS.output_overwrite or not path.exists(FLAGS.output_file):
         writeheader = True
     with open(FLAGS.output_file, mode='w+' if FLAGS.output_overwrite else 'a+') as f:
-        fieldnames = ['method', 'variant', 'run', 'samples', 'noise', 'results']
+        fieldnames = ['method', 'variant', 'run', 'samples', 'noise', 'results', 'time']
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         if writeheader:
             writer.writeheader()
@@ -86,7 +87,7 @@ def estimate_from_split_matrices(eval_fn):
         for run in range(FLAGS.noise_runs):
 
             if FLAGS.output_file:
-                rows = [_get_csv_row(k, run, samples_train, 0.0, v) for k, v in result_full.items()]
+                rows = [_get_csv_row(k, run, samples_train, 0.0, v, (end - start) / float(len(result_full))) for k, v in result_full.items()]
                 result_rows.extend(rows)
 
             logging.log(logging.DEBUG, "Start noisy run {} out of {}".format(run+1, FLAGS.noise_runs))
@@ -110,7 +111,7 @@ def estimate_from_split_matrices(eval_fn):
                 logging.log(logging.INFO, "Run {}/{} - noise level {}: {}".format(run+1, FLAGS.noise_runs, noise_level, result))
 
                 if FLAGS.output_file:
-                    rows = [_get_csv_row(k, run, samples_train, noise_level, v) for k, v in result.items()]
+                    rows = [_get_csv_row(k, run, samples_train, noise_level, v, (end - start) / float(len(result))) for k, v in result.items()]
                     result_rows.extend(rows)
 
                 noise_end = time.time()
@@ -122,7 +123,7 @@ def estimate_from_split_matrices(eval_fn):
             _write_result(result_rows)
 
     elif FLAGS.output_file:
-        rows = [_get_csv_row(k, 0, samples_train, 0.0, v) for k, v in result_full.items()]
+        rows = [_get_csv_row(k, 0, samples_train, 0.0, v, (end - start) / float(len(result_full))) for k, v in result_full.items()]
         _write_result(rows)
 
 
@@ -149,7 +150,7 @@ def estimate_from_single_matrix(eval_fn):
         for run in range(FLAGS.noise_runs):
 
             if FLAGS.output_file:
-                rows = [_get_csv_row(k, run, samples_train, 0.0, v) for k, v in result_full.items()]
+                rows = [_get_csv_row(k, run, samples_train, 0.0, v, (end - start) / float(len(result_full))) for k, v in result_full.items()]
                 result_rows.extend(rows)
 
             logging.log(logging.DEBUG, "Start noisy run {} out of {}".format(run+1, FLAGS.noise_runs))
@@ -172,7 +173,7 @@ def estimate_from_single_matrix(eval_fn):
                 logging.log(logging.INFO, "Run {}/{} - noise level {}: {}".format(run+1, FLAGS.noise_runs, noise_level, result))
 
                 if FLAGS.output_file:
-                    rows = [_get_csv_row(k, run, samples_train, noise_level, v) for k, v in result.items()]
+                    rows = [_get_csv_row(k, run, samples_train, noise_level, v, (end - start) / float(len(result))) for k, v in result.items()]
                     result_rows.extend(rows)
 
                 noise_end = time.time()
@@ -184,7 +185,7 @@ def estimate_from_single_matrix(eval_fn):
             _write_result(result_rows)
 
     elif FLAGS.output_file:
-        rows = [_get_csv_row(k, 0, samples_train, 0.0, v) for k, v in result_full.items()]
+        rows = [_get_csv_row(k, 0, samples_train, 0.0, v, (end - start) / float(len(result_full))) for k, v in result_full.items()]
         _write_result(rows)
 
 

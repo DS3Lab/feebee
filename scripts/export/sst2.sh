@@ -10,7 +10,13 @@ mkdir -p "matrices/$dataset/test/"
 
 sfolder="scripts/export"
 
-# TODO: Add export BOW and BOW-TFIDF
+# BoW
+cmd="python tools/datasets/sst2/generate_bag_of_words.py"
+$cmd
+
+# BoW-TFIDF
+cmd="python tools/datasets/sst2/generate_bag_of_words_tfidf.py"
+$cmd
 
 # PCA 8 / 16 / 32 / 64
 cmd="bash $sfolder/export_all_pca.sh $dataset $suffix 8"

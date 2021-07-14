@@ -6,6 +6,14 @@ mkdir -p "matrices/$dataset/test/"
 
 sfolder="scripts/export"
 
+# BoW
+cmd="python tools/datasets/yelp/generate_bag_of_words.py"
+$cmd
+
+# BoW-TFIDF
+cmd="python tools/datasets/yelp/generate_bag_of_words_tfidf.py"
+$cmd
+
 # TF Hub
 suffix=elmo
 module=elmo/3
