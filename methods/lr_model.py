@@ -29,7 +29,7 @@ def train_model_cross_entropy(features_train, labels_train, features_test, label
             keras.layers.Dense(classes, input_shape = (dimension,), activation='softmax', kernel_regularizer=tf.keras.regularizers.l2(l2_reg))
         ])
         model.compile(optimizer = keras.optimizers.SGD(learning_rate=sgd_lr, momentum=FLAGS.sgd_momentum), loss='sparse_categorical_crossentropy', metrics=['accuracy'])
-        model.fit(features_train, labels_train, epochs = FLAGS.epochs, batch_size=FLAGS.batch_size, validation_data=(features_test, labels_test))
+        model.fit(features_train, labels_train, epochs = FLAGS.epochs, batch_size=FLAGS.batch_size, validation_data=(features_test, labels_test), verbose=0)
 
     loss_accuracy = model.evaluate(features_test, labels_test, verbose=0)
 
@@ -60,6 +60,6 @@ def eval_from_matrices(train_features, test_features, train_labels, test_labels)
         for sgd_lr in sorted([float(x) for x in FLAGS.sgd_lrs]):
 
             acc = train_model_cross_entropy(train_features, train_labels, test_features, test_labels, classes, dim, l2_reg, sgd_lr)
-            results[KEY_PATTERN.format(l2_reg, lr)] = 1.0 - acc
+            results[KEY_PATTERN.format(l2_reg, sgd_lr)] = 1.0 - acc
 
     return results
