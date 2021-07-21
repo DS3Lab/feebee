@@ -14,9 +14,9 @@ from .timed_logger import TimedLogger
 
 FLAGS = flags.FLAGS
 
-flags.DEFINE_list("l2_regs", [0.0, 0.01], "L2 regularization (list) of the last layer")
+flags.DEFINE_list("l2_regs", [0.0], "L2 regularization (list) of the last layer")
 flags.DEFINE_integer("epochs", 100, "Number of epochs to train")
-flags.DEFINE_list("sgd_lrs", [0.1, 0.01], "SGD learning rate (list)")
+flags.DEFINE_list("sgd_lrs", [0.1], "SGD learning rate (list)")
 flags.DEFINE_float("sgd_momentum", 0.9, "SGD momentum")
 
 KEY_PATTERN = "l2={0}, lr={1}"

@@ -26,7 +26,7 @@ flags.DEFINE_string("labels_train", None, "Name of the train labels numpy matrix
 flags.DEFINE_string("labels_test", None, "Name of the test labels numpy matrix exported file (npy)")
 
 flags.DEFINE_list("noise_levels", [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], "Run at different noise levels")
-flags.DEFINE_integer("noise_runs", 30, "Number of runs for different noise levels")
+flags.DEFINE_integer("noise_runs", 10, "Number of runs for different noise levels")
 
 flags.DEFINE_string("output_file", None, "File to write the output in CSV format (including headers)")
 flags.DEFINE_bool("output_overwrite", True, "Writes (if True) or appends (if False) to the specified output file if any")
