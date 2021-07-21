@@ -1,7 +1,7 @@
 dataset=$1
 suffix=$2
 
-split=$test
+split="test"
 outputfolder=outputs/$dataset/de_knn/$split
 mkdir -p $outputfolder
 
