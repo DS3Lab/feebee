@@ -9,6 +9,11 @@ do
 
   cmd="python estimate.py --method kde --features_train matrices/$dataset/$split/features_$suffix.npy --labels_train matrices/$dataset/$split/labels_$suffix.npy -v 1 --kde_bandwidth $beta --output_file $outputfolder/${suffix}_beta_$beta.csv" 
 
-  echo $cmd
-  bsub -n 4 -W 24:00 -R "rusage[mem=11000,ngpus_excl_p=1]" -o $outputfolder/_lsf.${suffix}_beta_$beta_ $cmd
+  if [ -f "$outputfolder/_lsf.${suffix}_beta_$beta" ]
+  then
+    echo "File $outputfolder/_lsf.${suffix}_beta_$beta esits, skipping."
+  else
+    echo $cmd
+    bsub -n 4 -W 24:00 -R "rusage[mem=11000,ngpus_excl_p=1]" -o $outputfolder/_lsf.${suffix}_beta_$beta $cmd
+  fi
 done
