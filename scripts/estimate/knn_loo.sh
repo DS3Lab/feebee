@@ -3,21 +3,21 @@ suffix=$2
 runs=$3
 
 split="test"
-outputfolder=outputs/$dataset/onenn_knn/$split
+outputfolder=outputs/$dataset/knn_loo/$split
 mkdir -p $outputfolder
 
 for measure in cosine squared_l2
 do
-  cmd="python estimate.py --method onenn --onenn_measure $measure --features_train matrices/$dataset/$split/features_$suffix.npy --labels_train matrices/$dataset/$split/labels_$suffix.npy --noise_runs $runs -v 1 --output_file $outputfolder/${suffix}_measure_${measure}.csv" 
+  cmd="python estimate.py --method knn_loo --knn_measure $measure --features_train matrices/$dataset/$split/features_$suffix.npy --labels_train matrices/$dataset/$split/labels_$suffix.npy --noise_runs $runs -v 1 --output_file $outputfolder/${suffix}_measure_${measure}.csv"
 
   if [ -f "$outputfolder/_lsf.${suffix}_measure_${measure}" ]
   then
     echo "File $outputfolder/_lsf.${suffix}_measure_${measure} esits, skipping."
   else
     i=1
-    until [ $i -gt 100 ]
+    until [ $i -gt 10 ]
     do
-      cmd="$cmd --onenn_k $i"
+      cmd="$cmd --knn_k $i"
       ((i=i+1))
     done
 

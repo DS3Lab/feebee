@@ -1,11 +1,12 @@
 dataset=$1
 suffix=$2
+runs=$3
 
 split="test"
 outputfolder=outputs/$dataset/de_knn/$split
 mkdir -p $outputfolder
 
-cmd="python estimate.py --method kde_knn_loo --features_train matrices/$dataset/$split/features_$suffix.npy --labels_train matrices/$dataset/$split/labels_$suffix.npy -v 1 --output_file $outputfolder/$suffix.csv" 
+cmd="python estimate.py --method kde_knn_loo --features_train matrices/$dataset/$split/features_$suffix.npy --labels_train matrices/$dataset/$split/labels_$suffix.npy --noise_runs $runs -v 1 --output_file $outputfolder/$suffix.csv" 
 
 if [ -f "$outputfolder/_lsf.$suffix" ]
 then

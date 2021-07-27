@@ -38,9 +38,11 @@ def main(argv):
                             continue
                         if f"{identifier}{CSV_SUFFIX}" not in files:
                             logging.log(logging.INFO, f"{identifier} in folder {path} has LSF file but no CSV files.")
-                            # TODO check for timeout or other error (e.g., OOM)
-                            # suffix[identifier] = "TIMEOUT"
                             suffix[identifier] = "ERROR"
+                            # Check for timeout or other error (e.g., OOM)
+                            with open(os.path.join(path, f)) as myfile:
+                                if "TERM_RUNLIMIT: job killed after reaching LSF run time limit." in myfile.read():
+                                    suffix[identifier] = "TIMEOUT"
                         else:
                             suffix[identifier] = "OK"
                     elif f.endswith(CSV_SUFFIX):

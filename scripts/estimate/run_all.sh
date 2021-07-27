@@ -1,4 +1,5 @@
-scripts="scripts/estimate/de_knn.sh scripts/estimate/kde.sh scripts/estimate/lr_model.sh scripts/estimate/onenn_knn.sh scripts/estimate/ghp.sh"
+scripts="scripts/estimate/knn_loo.sh"
+#scripts="scripts/estimate/de_knn.sh scripts/estimate/kde.sh scripts/estimate/lr_model.sh scripts/estimate/onenn_knn.sh scripts/estimate/ghp.sh scripts/estimate/knn.sh scripts/estimate/knn_loo.sh"
 
 for dataset in mnist cifar10 cifar100
 do
@@ -6,7 +7,7 @@ do
   do
     for s in $scripts
     do
-      bash $s $dataset $suffix
+      bash $s $dataset $suffix 10
     done
   done
 done
@@ -17,7 +18,7 @@ do
   do
     for s in $scripts
     do
-      bash $s $dataset $suffix
+      bash $s $dataset $suffix 10
     done
   done
 done
@@ -27,6 +28,6 @@ for suffix in bert elmo nnlm50 nnlm50_norm nnlm128 nnlm128_norm use
 do
   for s in $scripts
   do
-    bash $s $dataset $suffix
+    bash $s $dataset $suffix 5
   done
 done
