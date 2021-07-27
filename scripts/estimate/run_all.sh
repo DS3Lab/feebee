@@ -1,5 +1,4 @@
-scripts="scripts/estimate/knn_loo.sh"
-#scripts="scripts/estimate/de_knn.sh scripts/estimate/kde.sh scripts/estimate/lr_model.sh scripts/estimate/onenn_knn.sh scripts/estimate/ghp.sh scripts/estimate/knn.sh scripts/estimate/knn_loo.sh"
+scripts="scripts/estimate/de_knn.sh scripts/estimate/kde.sh scripts/estimate/lr_model.sh scripts/estimate/onenn_knn.sh scripts/estimate/ghp.sh scripts/estimate/knn.sh scripts/estimate/knn_loo.sh"
 
 for dataset in mnist cifar10 cifar100
 do
