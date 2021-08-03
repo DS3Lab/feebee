@@ -2,3 +2,5 @@
 __pycache__
 matrices
 outputs
+analysis.csv
+results.csv
