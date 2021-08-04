@@ -7,7 +7,7 @@ import pandas as pd
 FLAGS = flags.FLAGS
 
 flags.DEFINE_string("path", "outputs", "Path to the matrices directory")
-flags.DEFINE_string("output_file", "results.csv", "Output file. None to not store results")
+flags.DEFINE_string("output_file", "outputs/results.csv", "Output file. None to not store results")
 
 CSV_SUFFIX = ".csv"
 
@@ -18,6 +18,8 @@ def main(argv):
     df = None
 
     for dataset in sorted(os.listdir(base_path)):
+        if not os.path.isdir(os.path.join(base_path, dataset)):
+            continue
         print(dataset)
 
         for method in sorted(os.listdir(os.path.join(base_path, dataset))):
@@ -34,10 +36,14 @@ def main(argv):
 
                 for f in files:
                     if f.endswith(CSV_SUFFIX):
+                        identifier = f[:-len(CSV_SUFFIX)]
+                        df_read = pd.read_csv(os.path.join(path, f))
+                        df_read["dataset"] = dataset
+                        df_read["identifier"] = identifier
                         if df is None:
-                            df = pd.read_csv(os.path.join(path, f))
+                            df = df_read
                         else:
-                            df = df.append(pd.read_csv(os.path.join(path, f)))
+                            df = df.append(df_read)
 
     if FLAGS.output_file and df is not None:
         df.to_csv(FLAGS.output_file)

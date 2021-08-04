@@ -7,7 +7,7 @@ import pandas as pd
 FLAGS = flags.FLAGS
 
 flags.DEFINE_string("path", "outputs", "Path to the matrices directory")
-flags.DEFINE_string("output_file", "analysis.csv", "Output file. None to not store results")
+flags.DEFINE_string("output_file", "outputs/analysis.csv", "Output file. None to not store results")
 flags.DEFINE_bool("cleanup", False, "Cleanup LSF files with no matching CSV file")
 
 LSF_PREFIX = "_lsf."
@@ -21,6 +21,8 @@ def main(argv):
     results = []
 
     for dataset in sorted(os.listdir(base_path)):
+        if not os.path.isdir(os.path.join(base_path, dataset)):
+            continue
         print(dataset)
 
         for method in sorted(os.listdir(os.path.join(base_path, dataset))):
