@@ -30,3 +30,12 @@ do
     bash $s $dataset $suffix 5
   done
 done
+
+dataset="checkerboard_medium"
+for suffix in raw
+do
+  for s in $scripts
+  do
+    bash $s $dataset $suffix 5
+  done
+done
