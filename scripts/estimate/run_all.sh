@@ -36,6 +36,6 @@ for suffix in raw
 do
   for s in $scripts
   do
-    bash $s $dataset $suffix 5
+    bash $s $dataset $suffix 10
   done
 done

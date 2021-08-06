@@ -13,7 +13,6 @@ flags.DEFINE_string("export_labels", None, "Labels export file name")
 flags.DEFINE_integer("dim1", 2, "Number of tiles in the first dimension")
 flags.DEFINE_integer("dim2", 2, "Number of tiles in the second dimension")
 flags.DEFINE_integer("samples", 5000, "Number of samples per tile")
-flags.DEFINE_integer("seed", 42, "Random seed")
 flags.DEFINE_float("scale", 0.125, "Scale for the normal distribtion centered in the middle of the tile.")
 
 def main(argv):
@@ -24,22 +23,20 @@ def main(argv):
     dim1 = FLAGS.dim1 #x-dimension
     dim2 = FLAGS.dim2 #y-dimension
     n_bucket = FLAGS.samples
-
-    np.random.seed(FLAGS.seed)
     random_scale=FLAGS.scale
 
     data = {'x1':[],'x2':[],'label':[]}
     for xcoor in range(dim1):
-      for ycoor in range(dim2):
-        if xcoor % 2 == 0 and ycoor % 2 == 0:
-          label = 1
-        elif xcoor % 2 == 1 and ycoor % 2 == 1:
-          label = 1
-        else:
-          label = 0
-    data['x1'].extend(np.random.normal(xcoor+0.5, random_scale, n_bucket))
-    data['x2'].extend(np.random.normal(ycoor+0.5, random_scale, n_bucket))
-    data['label'].extend([label]*n_bucket)
+        for ycoor in range(dim2):
+            if xcoor % 2 == 0 and ycoor % 2 == 0:
+                label = 1
+            elif xcoor % 2 == 1 and ycoor % 2 == 1:
+                label = 1
+            else:
+                label = 0
+            data['x1'].extend(np.random.normal(xcoor+0.5, random_scale, n_bucket))
+            data['x2'].extend(np.random.normal(ycoor+0.5, random_scale, n_bucket))
+            data['label'].extend([label]*n_bucket)
 
     features = np.column_stack([data['x1'], data['x2']])
     labels = np.array(data['label'])

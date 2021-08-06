@@ -18,6 +18,9 @@ KEY_PATTERN = "measure={0}, k={1}"
 
 def _get_lowerbound(value, k, classes):
 
+    if value <= 1e-10:
+        return 0.0
+
     if classes > 2 or k == 1:
         return ((classes - 1.0)/float(classes)) * (1.0 - math.sqrt(max(0.0, 1 - ((float(classes) / (classes - 1.0)) * value))))
 
