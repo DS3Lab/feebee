@@ -12,6 +12,7 @@ import time
 from transformations.reader.matrix import test_argument_and_file, load_and_log
 import transformations.label_noise as label_noise
 import methods.knn as knn
+import methods.knn_extrapolate as knn_extrapolate
 import methods.ghp as ghp
 import methods.kde as kde
 import methods.onenn as onenn
@@ -31,7 +32,7 @@ flags.DEFINE_integer("noise_runs", 5, "Number of runs for different noise levels
 flags.DEFINE_string("output_file", None, "File to write the output in CSV format (including headers)")
 flags.DEFINE_bool("output_overwrite", True, "Writes (if True) or appends (if False) to the specified output file if any")
 
-flags.DEFINE_enum("method", None, ["knn", "knn_loo", "ghp", "kde_knn_loo", "kde", "onenn", "lr_model"], "Method to estimate the bayes error (results in either 1 value or a lower and upper bound)")
+flags.DEFINE_enum("method", None, ["knn", "knn_loo", "knn_extrapolate", "ghp", "kde_knn_loo", "kde", "onenn", "lr_model"], "Method to estimate the bayes error (results in either 1 value or a lower and upper bound)")
 
 def _get_csv_row(variant, run, samples, noise, results, time):
     return {'method': FLAGS.method,
@@ -197,7 +198,9 @@ def main(argv):
 
     if FLAGS.method == "knn":
         estimate_from_split_matrices(knn.eval_from_matrices)
-    if FLAGS.method == "lr_model":
+    elif FLAGS.method == "knn_extrapolate":
+        estimate_from_split_matrices(knn_extrapolate.eval_from_matrices)
+    elif FLAGS.method == "lr_model":
         estimate_from_split_matrices(lr_model.eval_from_matrices)
     elif FLAGS.method == "knn_loo":
         estimate_from_single_matrix(knn.eval_from_matrix_loo)

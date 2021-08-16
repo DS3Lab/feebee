@@ -12,7 +12,7 @@ FLAGS = flags.FLAGS
 flags.DEFINE_enum("knn_measure", "squared_l2", ["squared_l2", "cosine"], "Measure used for KNN distance matrix computation")
 flags.DEFINE_multi_integer("knn_k", "1", "Values for K in KNN", lower_bound=1)
 flags.DEFINE_integer("knn_subtest", None, "Split the testset for estimation", lower_bound=1)
-flags.DEFINE_integer("knn_subtrain", None, "Split the testset for estimation", lower_bound=1)
+flags.DEFINE_integer("knn_subtrain", None, "Split the trainset for estimation", lower_bound=1)
 
 KEY_PATTERN = "measure={0}, k={1}"
 
