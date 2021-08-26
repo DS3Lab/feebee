@@ -4,3 +4,5 @@ matrices
 outputs
 analysis.csv
 results.csv
+areas.csv
+get_files.sh
