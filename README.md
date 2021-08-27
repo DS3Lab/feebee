@@ -42,7 +42,7 @@ In order to test your BER estimator using FeeBee, please submit a pull-request w
 Your method needs to implement the follow on of the following signature:
 
 - `def eval_from_single_matrix(features, labels)`
-- `def eval_from_single_matrix(train_features, train_labels, test_features, test_labels)`
+- `def eval_from_two_matrices(train_features, train_labels, test_features, test_labels)`
 
 The features are represented by a 2d numpy array (first: number of samples, second: feature dimension), wereas the labels are 1D numpy arrays (number of samples).
 
