@@ -40,10 +40,12 @@ config = {
     },
 }
 
-df_results = pd.read_csv(path.join(directory, "results.csv"))
+# Prepare df_results
+df_results = pd.read_csv("results.csv")
+df_results = df_results[df_results.dataset.isin(config.keys())]
 df_results.drop(columns=df_results.columns[0],
-        axis=1,
-        inplace=True)
+                axis=1,
+                inplace=True)
 df_results["results"] = df_results.results.apply(lambda x: [float(z) for z in x[1:-1].split(', ')] if x.startswith('[') else [float(x)])
 
 # Get transformation from identifier
@@ -56,20 +58,47 @@ def split_identifiers(x):
 df_results["transformation"] = df_results.identifier.apply(split_identifiers)
 
 # Split into upper and lower
-df = df_results
-df["value"] = df.results.apply(lambda x: x[0])
-df["value_type"] = "upperbound"
-df["label"] = df.method + '/' + df.variant + '/' + df.transformation
+df_results["value"] = df_results.results.apply(lambda x: x[0])
+df_results["value_type"] = "upperbound"
 
-cp_df = df.copy()
-cp_df["value"] = cp_df.results.apply(lambda x: x[1] if len(x) > 1 else x[0]*0.95)
+scaling_constant = 0.95
+cp_df = df_results.copy()
+cp_df["value"] = cp_df.results.apply(lambda x: x[1] if len(x) > 1 else x[0]*scaling_constant)
 cp_df["value_type"] = "lowerbound"
 
-df_results = pd.concat([df, cp_df], ignore_index=True)
-df = df_results
+df_results = pd.concat([df_results, cp_df], ignore_index=True)
+
+# Add 1NN
+cp_df = df_results[(df_results.method == 'knn') &
+                   (df_results.variant.str.endswith(', k=1'))].copy()
+
+cp_df["method"] = '1nn'
+cp_df["variant"] = cp_df.variant.apply(lambda x: x[:-len(", k=1")])
+
+df_results = pd.concat([df_results, cp_df], ignore_index=True)
+
+# Change LR and add other constant
+df_results["method"] = df_results.method.apply(lambda x: x if x != 'lr_model' else f'lr_model_{scaling_constant}')
+
+scaling_constant = 0.8
+cp_df = df_results[(df_results.method.str.startswith('lr_model')) &
+                   (df_results.value_type == 'upperbound')].copy()
+cp_df["method"] = f'lr_model_{scaling_constant}'
+
+cp_df2 = cp_df.copy()
+cp_df2["value"] = cp_df2.results.apply(lambda x: x[1] if len(x) > 1 else x[0]*scaling_constant)
+cp_df2["value_type"] = "lowerbound"
+df_results = pd.concat([df_results, cp_df, cp_df2], ignore_index=True)
+
+# Set label
+df_results["label"] = df_results.method + '/' + df_results.variant + '/' + df_results.transformation
 
 # DROP NaNs
-df.dropna(subset = ["value"], inplace=True)
+df_results.dropna(subset = ["value"], inplace=True)
+
+# Get results
+
+df = df_results
 
 columns = ["dataset", "method", "variant", "transformation", "upperbound", "lowerbound", "eu_top", "eu_bottom", "eu_sum", "el_top", "el_bottom", "el_sum", "time"]
 rows = []
