@@ -14,6 +14,8 @@ App 'export.py'. Scripts in ...
 
 ## How-To: Perform the analysis
 
+Public colab available under: https://colab.research.google.com/drive/1hFmFVyl78eSs8zE2cYx100nAArxa0rRQ?usp=sharing
+
 ## How-To: Contribute
 
 In order to test your BER estimator using FeeBee, please submit a pull-request with your own BER estimator (new file in the folder ``methods'').
