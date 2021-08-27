@@ -3,12 +3,29 @@ FeeBee is a ***F***ram***e***work for ***e***valuating ***B***ayes ***e***rror *
 
 ## How-To: Run the Framework
 
-### Dataset export tool
-App 'export.py'. Scripts in ...
+Running the evaluation on all datasets, feature transformations, methods and their hyper-parameters involves four major steps.
 
-### Estimate the lower and upper bounds
+### (1) Export all dataset representations
+The app used for exporting dataset representation into numpy arrays is can be found in the file `export.py`.
+In order to export all representations inspect and run the following scripts:
 
-### Collect the results
+- `bash scripts/export/mnist.sh`
+- `bash scripts/export/cifar10.sh`
+- `bash scripts/export/cifar100.sh`
+- `bash scripts/export/imdb.sh`
+- `bash scripts/export/sst2.sh`
+- `bash scripts/export/yelp.sh`
+
+### (2) Estimate the lower and upper bounds
+
+Running all defined methods for a fixed feature transformation, dataset, and set of hyper-parameters can be done using the app given in the file `estimate.py`.
+Every method should have a corresponding script in the folder `scripts/estimate/`. The current scripts are written such that they can be executed using [slurm](https://slurm.schedmd.com/documentation.html). Finally, the script `scripts/estimate/run_all.sh` runs all the methods on all datasets.
+
+### (3) Collect the results
+
+Every method executed for a fixed feature transformation, dataset, and set of hyper-parameters creates a single csv file. In order to collect these results into a exported pandas dataframe (`results.csv`), the corresponding script `collect_results.py` needs to be executed.
+
+Running the script `run_analysis.py` allows to collect the failure state of single executions (timeout or memory error).
 
 ### Estimate the areas
 
