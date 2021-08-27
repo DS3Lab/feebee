@@ -29,7 +29,7 @@ Running the script `run_analysis.py` allows to collect the failure state of sing
 
 ### (4) Calculate the areas for FeeBee
 
-Finally, using the collected results `results.csv`, one can calcuate the areas $L_\mathcal{D}$ and $U_\mathcal{D}$ for each successfull dataset, method, variant and tranformation combination. The script `calculate_areas.py` will perform this task and export the areas from a pandas dataframe into the file `areas.csv`.
+Finally, using the collected results `results.csv`, one can calcuate the areas for each successfull dataset, method, variant and tranformation combination. The script `calculate_areas.py` will perform this task and export the areas from a pandas dataframe into the file `areas.csv`.
 
 ## How-To: Perform the analysis
 
@@ -39,9 +39,11 @@ The three used pandas dataframes are shared over a public GDrive and downloaded 
 ## How-To: Contribute
 
 In order to test your BER estimator using FeeBee, please submit a pull-request with your own BER estimator as a new file in the folder `methods`.
-Your method needs to implement the follow
+Your method needs to implement the follow on of the following signature:
 
-### Interface BER Estimator
+- `def eval_from_single_matrix(features, labels)`
+- `def eval_from_single_matrix(train_features, train_labels, test_features, test_labels)`
 
-Input: lib/dataset
-Output: Upper and lower bound
+The features are represented by a 2d numpy array (first: number of samples, second: feature dimension), wereas the labels are 1D numpy arrays (number of samples).
+
+Independent of the choice of signatur, the method should return a dictionary. Every item should have a key representing a single variant (i.e., set of hyper-parameters, or set to 'default' if not present), whereas the value of every item should be a list of two element. The first beeing the upper bound estimate and the second the lower bound estimate. If a method estimates the BER directly, and not any lower or upper bounds, the value should contain a list with twice the same element in it.
