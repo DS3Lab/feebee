@@ -25,15 +25,16 @@ Every method should have a corresponding script in the folder `scripts/estimate/
 
 Every method executed for a fixed feature transformation, dataset, and set of hyper-parameters creates a single csv file with all estimates accross all independent runs. In order to collect these results into a exported pandas dataframe (`results.csv`), the corresponding script `collect_results.py` needs to be executed.
 
-Running the script `run_analysis.py` allows to collect the failure state of single executions (timeout or memory error).
+Running the script `run_analysis.py` allows to collect the failure state of single executions (timeout or memory error) into an exported dataframe `analysis.csv`.
 
 ### (4) Calculate the areas for FeeBee
 
-Finally, using the collected results `results.csv`, one can calcuate the areas $L_\mathcal{D}$ and $U_\mathcal{D}$ for each successfull dataset, method, variant and tranformation combination. The script `calculate_areas.py` will perform this task.
+Finally, using the collected results `results.csv`, one can calcuate the areas $L_\mathcal{D}$ and $U_\mathcal{D}$ for each successfull dataset, method, variant and tranformation combination. The script `calculate_areas.py` will perform this task and export the areas from a pandas dataframe into the file `areas.csv`.
 
 ## How-To: Perform the analysis
 
-Public colab available under: https://colab.research.google.com/drive/1hFmFVyl78eSs8zE2cYx100nAArxa0rRQ?usp=sharing
+Examples on how to use the resulting Pandas dataframe along with all the code used to create Figures and Tables in the original publication of FeeBee, can be  found in the public colab available under: https://colab.research.google.com/drive/1hFmFVyl78eSs8zE2cYx100nAArxa0rRQ?usp=sharing.
+The three used pandas dataframes are shared over a public GDrive and downloaded automatically inside the above colab.
 
 ## How-To: Contribute
 
