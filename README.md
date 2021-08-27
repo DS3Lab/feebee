@@ -1,5 +1,5 @@
 # FeeBee
-FeeBee is a Framework for evaluating Bayes error estimators on real-world data with unknown ...
+FeeBee is a *F*ram*e*work for *e*valuating *B*ayes *e*rror *e*stimators on real-world data with unknown underlying distribution.
 
 # How-To: Run the Framework
 
