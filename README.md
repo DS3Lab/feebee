@@ -18,7 +18,7 @@ Public colab available under: https://colab.research.google.com/drive/1hFmFVyl78
 
 ## How-To: Contribute
 
-In order to test your BER estimator using FeeBee, please submit a pull-request with your own BER estimator (new file in the folder `methods`).
+In order to test your BER estimator using FeeBee, please submit a pull-request with your own BER estimator as a new file in the folder `methods`.
 Your method needs to implement the follow
 
 ### Interface BER Estimator
