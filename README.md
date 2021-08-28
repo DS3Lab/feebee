@@ -46,7 +46,7 @@ Your method needs to implement one of the following signatures:
 
 The features are represented by a 2d numpy array (first: number of samples, second: feature dimension), wereas the labels are 1D numpy arrays (number of samples).
 
-Independent of the choice of signatur, the method should return a dictionary. Every item in it should have a key representing a single variant (i.e., set of hyper-parameters, or use 'default' if not present), whereas the value of every item should be a list of two element. The first beeing the upper bound estimate and the second the lower bound estimate for the set of hyper-parameters. If a method estimates the BER directly, and not any lower or upper bound, the value in the dictionary should contain a list with twice the same element in it.
+Independent of the choice of signature, the method should return a dictionary. Every item in it should have a key representing a single variant (i.e., set of hyper-parameters, or use 'default' if not present), whereas the value of every item should be a list of two element. The first beeing the upper bound estimate and the second the lower bound estimate for the set of hyper-parameters. If a method estimates the BER directly, and not any lower or upper bound, the value in the dictionary should contain a list with twice the same element in it.
 
 ## Citation
 
