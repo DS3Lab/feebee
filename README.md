@@ -6,7 +6,7 @@ FeeBee is a ***F***ram***e***work for ***e***valuating ***B***ayes ***e***rror *
 Running the evaluation on all datasets, feature transformations, methods and their hyper-parameters involves four major steps.
 
 ### (1) Export all dataset representations
-The app used for exporting dataset representation into numpy arrays is can be found in the file `export.py`.
+The app used for exporting dataset representations into numpy arrays is can be found in the file `export.py`.
 In order to export all representations inspect and run the following scripts:
 
 - `bash scripts/export/mnist.sh`
@@ -29,24 +29,24 @@ Running the script `run_analysis.py` allows to collect the failure state of sing
 
 ### (4) Calculate the areas for FeeBee
 
-Finally, using the collected results `results.csv`, one can calcuate the areas for each successfull dataset, method, variant and tranformation combination. The script `calculate_areas.py` will perform this task and export the areas from a pandas dataframe into the file `areas.csv`.
+Finally, using the collected results `results.csv`, one can calcuate the areas (i.e., FeeBee scores) for each successfull dataset, method, variant and tranformation combination. The script `calculate_areas.py` will perform this task and export the areas from a pandas dataframe into the file `areas.csv`.
 
 ## How-To: Perform the analysis
 
-Examples on how to use the resulting Pandas dataframe along with all the code used to create Figures and Tables in the original publication of FeeBee, can be  found in the public colab available under: https://colab.research.google.com/drive/1hFmFVyl78eSs8zE2cYx100nAArxa0rRQ?usp=sharing.
+Examples on how to use the resulting Pandas dataframe along with all the code used to create Figures and Tables in the original publication of FeeBee, can be found in the public colab available under: https://colab.research.google.com/drive/1hFmFVyl78eSs8zE2cYx100nAArxa0rRQ?usp=sharing.
 The three used pandas dataframes are shared over a public GDrive and downloaded automatically inside the above colab.
 
 ## How-To: Contribute
 
-In order to test your BER estimator using FeeBee, please submit a pull-request with your own BER estimator as a new file in the folder `methods`.
-Your method needs to implement the follow on of the following signature:
+In order to implement and test your BER estimator using FeeBee, please submit a pull-request with your own BER estimator as a new file in the folder `methods`.
+Your method needs to implement one of the following signatures:
 
 - `def eval_from_single_matrix(features, labels)`
 - `def eval_from_two_matrices(train_features, train_labels, test_features, test_labels)`
 
 The features are represented by a 2d numpy array (first: number of samples, second: feature dimension), wereas the labels are 1D numpy arrays (number of samples).
 
-Independent of the choice of signatur, the method should return a dictionary. Every item should have a key representing a single variant (i.e., set of hyper-parameters, or set to 'default' if not present), whereas the value of every item should be a list of two element. The first beeing the upper bound estimate and the second the lower bound estimate. If a method estimates the BER directly, and not any lower or upper bounds, the value should contain a list with twice the same element in it.
+Independent of the choice of signatur, the method should return a dictionary. Every item in it should have a key representing a single variant (i.e., set of hyper-parameters, or use 'default' if not present), whereas the value of every item should be a list of two element. The first beeing the upper bound estimate and the second the lower bound estimate for the set of hyper-parameters. If a method estimates the BER directly, and not any lower or upper bound, the value in the dictionary should contain a list with twice the same element in it.
 
 ## Citation
 
