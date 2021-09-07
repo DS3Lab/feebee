@@ -50,4 +50,4 @@ Independent of the choice of signature, the method should return a dictionary. E
 
 ## Citation
 
-_(coming soon)_
+Renggli, C., Rimanic, L., Hollenstein, N., & Zhang, C. (2021). Evaluating Bayes Error Estimators on Read-World Datasets with FeeBee. arXiv preprint arXiv:2108.13034. [[link]](https://arxiv.org/abs/2108.13034)
