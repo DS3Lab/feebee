@@ -40,6 +40,13 @@ config = {
     },
 }
 
+factor = None
+#factor = 0.75
+
+if factor:
+    for dataset in config.keys():
+       config[dataset]['sota'] = config[dataset]['sota']*factor
+
 # Prepare df_results
 df_results = pd.read_csv("results.csv")
 df_results = df_results[df_results.dataset.isin(config.keys())]
@@ -164,4 +171,5 @@ for (dataset, method, variant, transformation), df_grp in df.groupby(["dataset",
     rows.append([dataset, "1nn", variant[:-(len(suffix))], transformation, upperbound, lowerbound, eu[0], eu[1], eu[2], el[0], el[1], el[2], time])
 
 df_areas = pd.DataFrame(rows, columns=columns)
-df_areas.to_csv(path.join(directory, "areas.csv"))
+filename = "areas.csv" if not factor else "areas_{0:.2f}.csv".format(factor)
+df_areas.to_csv(path.join(directory, filename))
