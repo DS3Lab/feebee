@@ -35,8 +35,8 @@ In order to calculate the areas with varying SOTA factors, set the corresponding
 
 ## How-To: Perform the analysis
 
-Examples on how to use the resulting Pandas dataframe along with all the code used to create Figures and Tables in the original publication of FeeBee, can be found in the provided jupyter notebook `analysis_colab.ipynb`.
-The three used pandas dataframes are shared over a public GDrive and downloaded automatically inside the above colab if the flag `download_pre_computed_files` is set to True.
+Examples on how to use the resulting Pandas dataframe along with all the code used to create Figures and Tables in the original publication of FeeBee, can be found in the provided jupyter notebook `analysis_notebook.ipynb`.
+The three used pandas dataframes are shared over a public GDrive and downloaded automatically inside the above notebook if the flag `download_pre_computed_files` is set to True.
 
 ## How-To: Contribute
 
