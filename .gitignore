@@ -1,4 +1,7 @@
 .DS_Store
+.ipynb_checkpoints
+figures
+tables
 __pycache__
 matrices
 outputs

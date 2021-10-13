@@ -31,10 +31,12 @@ Running the script `run_analysis.py` allows to collect the failure state of sing
 
 Finally, using the collected results `results.csv`, one can calcuate the areas (i.e., FeeBee scores) for each successfull dataset, method, variant and tranformation combination. The script `calculate_areas.py` will perform this task and export the areas from a pandas dataframe into the file `areas.csv`.
 
+In order to calculate the areas with varying SOTA factors, set the corresponding variable in the same script and re-run it.
+
 ## How-To: Perform the analysis
 
-Examples on how to use the resulting Pandas dataframe along with all the code used to create Figures and Tables in the original publication of FeeBee, can be found in the public colab available under: https://colab.research.google.com/drive/1hFmFVyl78eSs8zE2cYx100nAArxa0rRQ?usp=sharing.
-The three used pandas dataframes are shared over a public GDrive and downloaded automatically inside the above colab.
+Examples on how to use the resulting Pandas dataframe along with all the code used to create Figures and Tables in the original publication of FeeBee, can be found in the provided jupyter notebook `analysis_colab.ipynb`.
+The three used pandas dataframes are shared over a public GDrive and downloaded automatically inside the above colab if the flag `download_pre_computed_files` is set to True.
 
 ## How-To: Contribute
 

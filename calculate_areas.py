@@ -4,41 +4,19 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import math
 import numpy as np
+import json
 import os
 import os.path as path
 
 directory = '.'
 
-config = {
-    'mnist': {
-        'classes': 10,
-        'sota': 0.0013
-    },
-    'cifar10': {
-        'classes': 10,
-        'sota': 0.005
-    },
-    'cifar100': {
-        'classes': 100,
-        'sota': 0.0392
-    },
-    'imdb': {
-        'classes': 2,
-        'sota': 0.0379
-    },
-    'sst2': {
-        'classes': 2,
-        'sota': 0.032
-    },
-    'yelp': {
-        'classes': 5,
-        'sota': 0.2780
-    },
-    'checkerboard_medium': {
+with open('config.json') as json_file:
+    config = json.load(json_file)
+
+config['checkerboard_medium'] = {
         'classes': 2,
         'sota': 0.00
-    },
-}
+    }
 
 factor = None
 #factor = 0.75
