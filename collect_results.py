@@ -8,6 +8,7 @@ FLAGS = flags.FLAGS
 
 flags.DEFINE_string("path", "outputs", "Path to the matrices directory")
 flags.DEFINE_string("output_file", "outputs/results.csv", "Output file. None to not store results")
+flags.DEFINE_list("datasets", '', "List of datasets")
 
 CSV_SUFFIX = ".csv"
 
@@ -19,6 +20,8 @@ def main(argv):
 
     for dataset in sorted(os.listdir(base_path)):
         if not os.path.isdir(os.path.join(base_path, dataset)):
+            continue
+        if dataset not in FLAGS.datasets:
             continue
         print(dataset)
 
