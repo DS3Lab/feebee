@@ -26,7 +26,7 @@ def main(argv):
         print(dataset)
 
         for method in sorted(os.listdir(os.path.join(base_path, dataset))):
-            print(" ", method)
+        
 
             for split in sorted(os.listdir(os.path.join(base_path, dataset, method))):
                 print("  ", split)

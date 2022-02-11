@@ -1,8 +1,11 @@
 .DS_Store
+.ipynb_checkpoints
+figures
+tables
 __pycache__
 matrices
 outputs
 analysis.csv
 results.csv
-areas.csv
+areas*.csv
 get_files.sh

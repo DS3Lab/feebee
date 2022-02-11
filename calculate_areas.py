@@ -4,41 +4,26 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import math
 import numpy as np
+import json
 import os
 import os.path as path
 
 directory = '.'
 
-config = {
-    'mnist': {
-        'classes': 10,
-        'sota': 0.0013
-    },
-    'cifar10': {
-        'classes': 10,
-        'sota': 0.005
-    },
-    'cifar100': {
-        'classes': 100,
-        'sota': 0.0392
-    },
-    'imdb': {
-        'classes': 2,
-        'sota': 0.0379
-    },
-    'sst2': {
-        'classes': 2,
-        'sota': 0.032
-    },
-    'yelp': {
-        'classes': 5,
-        'sota': 0.2780
-    },
-    'checkerboard_medium': {
+with open('config.json') as json_file:
+    config = json.load(json_file)
+
+config['checkerboard_medium'] = {
         'classes': 2,
         'sota': 0.00
-    },
-}
+    }
+
+factor = None
+#factor = 0.75
+
+if factor:
+    for dataset in config.keys():
+       config[dataset]['sota'] = config[dataset]['sota']*factor
 
 # Prepare df_results
 df_results = pd.read_csv("results.csv")
@@ -164,4 +149,5 @@ for (dataset, method, variant, transformation), df_grp in df.groupby(["dataset",
     rows.append([dataset, "1nn", variant[:-(len(suffix))], transformation, upperbound, lowerbound, eu[0], eu[1], eu[2], el[0], el[1], el[2], time])
 
 df_areas = pd.DataFrame(rows, columns=columns)
-df_areas.to_csv(path.join(directory, "areas.csv"))
+filename = "areas.csv" if not factor else "areas_{0:.2f}.csv".format(factor)
+df_areas.to_csv(path.join(directory, filename))
